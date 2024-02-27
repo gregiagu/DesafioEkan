@@ -25,6 +25,8 @@ dependencies {
     implementation(libs.guava)
     implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.assertj:assertj-core:3.25.1")
+    testImplementation("io.rest-assured:rest-assured:5.4.0")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

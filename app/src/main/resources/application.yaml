@@ -1,0 +1,32 @@
+# Application.yaml
+#
+# Created by Gustavo Gregianin
+
+app:
+  name: "Desafio Ekan"
+
+management:
+  info:
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+info:
+  app:
+    name: "Desafio Ekan"
+    description: "Desafio para a empresa Ekan"
+    version: "0.0.0"
+
+logging:
+  level:
+    io:
+      github: "DEBUG"
+  file:
+    name: "ekan.log"
+    path: "build"
+
+server:
+  port: 8080
