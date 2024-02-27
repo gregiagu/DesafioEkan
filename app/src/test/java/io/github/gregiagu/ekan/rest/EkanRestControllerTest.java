@@ -6,6 +6,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.time.LocalDateTime;
 
@@ -20,7 +21,7 @@ public class EkanRestControllerTest {
     @Test
     void itShouldGetTargetUrl() throws Exception {
         String timestamp = this.mvc.perform(
-                        MockMvcRequestBuilders.get("/health")
+                        MockMvcRequestBuilders.get("/api/health")
                                 .contentType(MediaType.TEXT_PLAIN)
                 )
                 .andReturn()
@@ -31,4 +32,17 @@ public class EkanRestControllerTest {
                 .isInstanceOf(LocalDateTime.class);
     }
 
+    @Test
+    void itShouldGetaRecipient() throws Exception {
+        String plainJson = mvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/recipients")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        System.out.println(plainJson);
+    }
 }
