@@ -33,9 +33,14 @@ server:
 
 spring:
   datasource:
-    url: "jdbc:h2:mem:ekandb"
+    url: "jdbc:h2:mem:qtbdb"
     username: "user"
     password: "ekan"
     driverClassName: "org.h2.Driver"
   jpa:
-    spring.jpa.database-platform: "org.hibernate.dialect.H2Dialect"
+    spring:
+      jpa:
+        database-platform: "org.hibernate.dialect.H2Dialect"
+  sql:
+    init:
+      mode: "always"
