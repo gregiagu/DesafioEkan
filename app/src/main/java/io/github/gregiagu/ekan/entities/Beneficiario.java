@@ -1,13 +1,18 @@
 package io.github.gregiagu.ekan.entities;
 
+import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 
-public class Beneficiario {
+@Entity
+@Table(name = "beneficiarios")
+public class Beneficiario implements Serializable {
 
-    private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String nome;
     private String telefone;
     private LocalDate dataNascimento;
@@ -15,7 +20,6 @@ public class Beneficiario {
     private LocalDate dataAtualizacao;
 
     public Beneficiario() {
-
     }
 
     public Beneficiario(
@@ -68,12 +72,19 @@ public class Beneficiario {
         return Objects.hash(nome, telefone, dataNascimento, dataInclusao, dataAtualizacao);
     }
 
-    public UUID getId() {
-        return id;
+    @Override
+    public String toString() {
+        return "Beneficiario{" +
+                "nome='" + nome + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                ", dataInclusao=" + dataInclusao +
+                ", dataAtualizacao=" + dataAtualizacao +
+                '}';
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public int getId() {
+        return id;
     }
 
     public String getNome() {

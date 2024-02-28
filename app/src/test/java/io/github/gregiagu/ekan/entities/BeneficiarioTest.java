@@ -1,10 +1,16 @@
 package io.github.gregiagu.ekan.entities;
 
+import io.github.gregiagu.ekan.dao.BeneficiarioDAO;
+import io.github.gregiagu.ekan.dao.BeneficiarioDAOImpl;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.*;
 
 public class BeneficiarioTest {
+
+    @Autowired
+    BeneficiarioDAO beneficiarioDAO;
 
     @Test
     void itShouldCreateEmptyBeneficiario() {
