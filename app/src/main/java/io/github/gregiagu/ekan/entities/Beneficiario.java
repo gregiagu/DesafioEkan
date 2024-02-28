@@ -2,8 +2,11 @@ package io.github.gregiagu.ekan.entities;
 
 import jakarta.persistence.*;
 
+import javax.print.Doc;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +21,9 @@ public class Beneficiario implements Serializable {
     private LocalDate dataNascimento;
     private LocalDate dataInclusao;
     private LocalDate dataAtualizacao;
+
+    @OneToMany(mappedBy = "beneficiario")
+    private List<Documento> documentos;
 
     public Beneficiario() {
     }
@@ -50,13 +56,13 @@ public class Beneficiario implements Serializable {
         this.dataAtualizacao = LocalDate.parse(dataAtualizacao);
     }
 
-    public Beneficiario(Beneficiario target) {
-        this.id = target.id;
-        this.nome = target.nome;
-        this.telefone = target.telefone;
-        this.dataNascimento = target.dataNascimento;
-        this.dataInclusao = target.dataInclusao;
-        this.dataAtualizacao = target.dataAtualizacao;
+    public Beneficiario(Beneficiario source) {
+        this.nome = source.nome;
+        this.telefone = source.telefone;
+        this.dataNascimento = source.dataNascimento;
+        this.dataInclusao = source.dataInclusao;
+        this.dataAtualizacao = source.dataAtualizacao;
+        this.documentos = source.documentos;
     }
 
     @Override
@@ -75,11 +81,13 @@ public class Beneficiario implements Serializable {
     @Override
     public String toString() {
         return "Beneficiario{" +
-                "nome='" + nome + '\'' +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
                 ", telefone='" + telefone + '\'' +
                 ", dataNascimento=" + dataNascimento +
                 ", dataInclusao=" + dataInclusao +
                 ", dataAtualizacao=" + dataAtualizacao +
+                ", documentos=" + documentos +
                 '}';
     }
 
@@ -125,5 +133,20 @@ public class Beneficiario implements Serializable {
 
     public void setDataAtualizacao(LocalDate dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
+    }
+
+    public List<Documento> getDocumentos() {
+        return documentos;
+    }
+
+    public void setDocumentos(List<Documento> documentos) {
+        this.documentos = documentos;
+    }
+
+    public void addDocumento(Documento doc) {
+        if (documentos == null) {
+            documentos = new ArrayList<>();
+        }
+        documentos.add(doc);
     }
 }
