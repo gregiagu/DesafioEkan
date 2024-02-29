@@ -13,15 +13,18 @@ public class Document implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    private DocumentType documentType;
+    @ManyToOne
+    @JoinColumn(name = "recipient_id")
+    private Recipient recipient;
+    private String documentType;
     private String description;
     private LocalDate registerDate;
-    private LocalDate updateDate;
+    private LocalDate lastUpdate;
 
     public Document() {}
 
     public Document(
-            DocumentType documentType,
+            String documentType,
             String description,
             String registerDate,
             String updateDate
@@ -29,11 +32,11 @@ public class Document implements Serializable {
         this.documentType = documentType;
         this.description  = description;
         this.registerDate = LocalDate.parse(registerDate);
-        this.updateDate   = LocalDate.parse(updateDate);
+        this.lastUpdate = LocalDate.parse(updateDate);
     }
 
     public Document(
-            DocumentType documentType,
+            String documentType,
             String description,
             LocalDate registerDate,
             LocalDate updateDate
@@ -41,7 +44,7 @@ public class Document implements Serializable {
         this.documentType = documentType;
         this.description  = description;
         this.registerDate = registerDate;
-        this.updateDate   = updateDate;
+        this.lastUpdate = updateDate;
     }
 
     public Document(
@@ -50,18 +53,26 @@ public class Document implements Serializable {
         this.documentType = source.documentType;
         this.description  = source.description;
         this.registerDate = source.registerDate;
-        this.updateDate   = source.updateDate;
+        this.lastUpdate = source.lastUpdate;
     }
 
     public Long getId() {
         return id;
     }
 
-    public DocumentType getDocumentType() {
+    public String getDocumentType() {
         return documentType;
     }
 
-    public void setDocumentType(DocumentType documentType) {
+    public Recipient getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(Recipient recipient) {
+        this.recipient = recipient;
+    }
+
+    public void setDocumentType(String documentType) {
         this.documentType = documentType;
     }
 
@@ -85,16 +96,16 @@ public class Document implements Serializable {
         this.registerDate = LocalDate.parse(registerDate);
     }
 
-    public LocalDate getUpdateDate() {
-        return updateDate;
+    public LocalDate getLastUpdate() {
+        return lastUpdate;
     }
 
-    public void setUpdateDate(LocalDate updateDate) {
-        this.updateDate = updateDate;
+    public void setLastUpdate(LocalDate lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public void setUpdateDate(String updateDate) {
-        this.updateDate = LocalDate.parse(updateDate);
+        this.lastUpdate = LocalDate.parse(updateDate);
     }
 
     @Override
@@ -104,7 +115,7 @@ public class Document implements Serializable {
                 ", documentType=" + documentType +
                 ", description='" + description + '\'' +
                 ", registerDate='" + registerDate + '\'' +
-                ", updateDate='" + updateDate + '\'' +
+                ", lastUpdate='" + lastUpdate + '\'' +
                 '}';
     }
 }

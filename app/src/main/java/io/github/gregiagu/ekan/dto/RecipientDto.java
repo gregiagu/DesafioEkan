@@ -1,6 +1,5 @@
 package io.github.gregiagu.ekan.dto;
 
-import io.github.gregiagu.ekan.entities.Document;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -13,7 +12,7 @@ public class RecipientDto {
     private String telephoneNumber;
     private LocalDate birthdate;
     private LocalDate registerDate;
-    private LocalDate updateDate;
+    private LocalDate lastUpdate;
 
     private List<DocumentDto> documentList;
 
@@ -49,12 +48,12 @@ public class RecipientDto {
         this.registerDate = registerDate;
     }
 
-    public LocalDate getUpdateDate() {
-        return updateDate;
+    public LocalDate getLastUpdate() {
+        return lastUpdate;
     }
 
-    public void setUpdateDate(LocalDate updateDate) {
-        this.updateDate = updateDate;
+    public void setLastUpdate(LocalDate lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public List<DocumentDto> getDocumentList() {

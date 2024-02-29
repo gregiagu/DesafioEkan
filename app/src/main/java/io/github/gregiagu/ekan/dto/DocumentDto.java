@@ -1,6 +1,5 @@
 package io.github.gregiagu.ekan.dto;
 
-import io.github.gregiagu.ekan.entities.DocumentType;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -8,16 +7,16 @@ import java.time.LocalDate;
 @Component
 public class DocumentDto {
 
-    private DocumentType documentType;
+    private String documentType;
     private String description;
     private LocalDate registerDate;
-    private LocalDate updateDate;
+    private LocalDate lastUpdate;
 
-    public DocumentType getDocumentType() {
+    public String getDocumentType() {
         return documentType;
     }
 
-    public void setDocumentType(DocumentType documentType) {
+    public void setDocumentType(String documentType) {
         this.documentType = documentType;
     }
 
@@ -37,11 +36,11 @@ public class DocumentDto {
         this.registerDate = registerDate;
     }
 
-    public LocalDate getUpdateDate() {
-        return updateDate;
+    public LocalDate getLastUpdate() {
+        return lastUpdate;
     }
 
-    public void setUpdateDate(LocalDate updateDate) {
-        this.updateDate = updateDate;
+    public void setLastUpdate(LocalDate lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }

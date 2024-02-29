@@ -20,9 +20,9 @@ public class Recipient implements Serializable {
     private String telephoneNumber;
     private LocalDate birthdate;
     private LocalDate registerDate;
-    private LocalDate updateDate;
+    private LocalDate lastUpdate;
 
-    @OneToMany
+    @OneToMany(mappedBy = "recipient")
     private List<Document> documentList;
 
 
@@ -39,7 +39,7 @@ public class Recipient implements Serializable {
         this.telephoneNumber = telephoneNumber;
         this.birthdate       = birthdate;
         this.registerDate    = registerDate;
-        this.updateDate      = updateDate;
+        this.lastUpdate = updateDate;
     }
 
     public Recipient(
@@ -53,7 +53,7 @@ public class Recipient implements Serializable {
         this.telephoneNumber = telephoneNumber;
         this.birthdate       = LocalDate.parse(birthdate);
         this.registerDate    = LocalDate.parse(registerDate);
-        this.updateDate      = LocalDate.parse(updateDate);
+        this.lastUpdate = LocalDate.parse(updateDate);
     }
 
     public Recipient(
@@ -63,7 +63,7 @@ public class Recipient implements Serializable {
         this.telephoneNumber = source.telephoneNumber;
         this.birthdate       = source.birthdate;
         this.registerDate    = source.registerDate;
-        this.updateDate      = source.updateDate;
+        this.lastUpdate = source.lastUpdate;
     }
 
     public Long getId() {
@@ -110,16 +110,16 @@ public class Recipient implements Serializable {
         this.registerDate = LocalDate.parse(registerDate);
     }
 
-    public LocalDate getUpdateDate() {
-        return updateDate;
+    public LocalDate getLastUpdate() {
+        return lastUpdate;
     }
 
-    public void setUpdateDate(LocalDate updateDate) {
-        this.updateDate = updateDate;
+    public void setLastUpdate(LocalDate lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public void setUpdateDate(String updateDate) {
-        this.updateDate = LocalDate.parse(updateDate);
+        this.lastUpdate = LocalDate.parse(updateDate);
     }
 
     public List<Document> getDocumentList() {
@@ -151,7 +151,7 @@ public class Recipient implements Serializable {
                 ", telephoneNumber='" + telephoneNumber + '\'' +
                 ", birthdate=" + birthdate +
                 ", registerDate=" + registerDate +
-                ", updateDate=" + updateDate +
+                ", lastUpdate=" + lastUpdate +
                 '}';
     }
 }
