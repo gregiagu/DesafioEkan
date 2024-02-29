@@ -33,7 +33,7 @@ server:
 
 spring:
   datasource:
-    url: "jdbc:h2:mem:qtbdb"
+    url: "jdbc:h2:mem:ekan"
     username: "user"
     password: "ekan"
     driverClassName: "org.h2.Driver"

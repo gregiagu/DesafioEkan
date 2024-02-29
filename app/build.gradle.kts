@@ -25,6 +25,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.3")
+    implementation("org.modelmapper:modelmapper:3.0.0")
     runtimeOnly("com.h2database:h2")
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
