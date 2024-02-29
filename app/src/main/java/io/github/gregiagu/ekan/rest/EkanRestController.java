@@ -4,6 +4,8 @@ import io.github.gregiagu.ekan.dto.RecipientDto;
 import io.github.gregiagu.ekan.entities.Recipient;
 import io.github.gregiagu.ekan.service.RecipientService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +18,7 @@ import java.time.LocalDateTime;
 @RequestMapping("/api")
 public class EkanRestController {
 
-
+    private final Logger logger;
     private ModelMapper modelMapper;
 
     private RecipientService recipientService;
@@ -28,6 +30,7 @@ public class EkanRestController {
     ) {
         this.modelMapper = modelMapper;
         this.recipientService = recipientService;
+        this.logger = LoggerFactory.getLogger(getClass());
     }
 
     @GetMapping("/health")
@@ -41,21 +44,8 @@ public class EkanRestController {
     @GetMapping("/recipient/{id}")
     public RecipientDto getRecipient(@PathVariable long id) {
 
-//        Recipient firstRecipient = new Recipient(
-//                "First Recipient",
-//                "+5511964442320",
-//                "2010-05-13",
-//                "2013-05-13",
-//                "2021-09-12"
-//        );
-//
-//        firstRecipient.addDocument(new Document(DocumentType.CPF, "33344455511", "2010-02-05", "2010-02-15"));
-//        firstRecipient.addDocument(new Document(DocumentType.RG, "553334446", "2010-02-05", "2010-02-15"));
-//
-//        RecipientDto map = modelMapper.map(firstRecipient, RecipientDto.class);
-//        return map;
-
-
+        logger.atDebug()
+                .log("Get Recipient Id: " + id);
         Recipient referenceById = recipientService.getReferenceById(id);
 
         return modelMapper.map(referenceById, RecipientDto.class);
