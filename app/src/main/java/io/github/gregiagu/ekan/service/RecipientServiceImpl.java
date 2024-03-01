@@ -1,8 +1,11 @@
 package io.github.gregiagu.ekan.service;
 
+import io.github.gregiagu.ekan.dto.AllRecipientsDto;
 import io.github.gregiagu.ekan.entities.Recipient;
 import io.github.gregiagu.ekan.repositories.RecipientRepo;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RecipientServiceImpl implements RecipientService{
@@ -23,5 +26,12 @@ public class RecipientServiceImpl implements RecipientService{
                         () -> new RuntimeException("Not found")
                 );
 
+    }
+
+    @Override
+    public List<Recipient> getAllRecipients() {
+        return recipientRepo
+                .findAll()
+                ;
     }
 }

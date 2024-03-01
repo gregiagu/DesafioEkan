@@ -1,5 +1,6 @@
 package io.github.gregiagu.ekan.rest;
 
+import io.github.gregiagu.ekan.dto.AllRecipientsDto;
 import io.github.gregiagu.ekan.dto.RecipientDto;
 import io.github.gregiagu.ekan.entities.Recipient;
 import io.github.gregiagu.ekan.service.RecipientService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -49,6 +51,16 @@ public class EkanRestController {
         Recipient referenceById = recipientService.getReferenceById(id);
 
         return modelMapper.map(referenceById, RecipientDto.class);
+    }
+
+    @GetMapping("/all-recipients")
+    public List<AllRecipientsDto> getAllRecipients() {
+        logger.atDebug()
+                .log("Getting All Recipients");
+        List<Recipient> allRecipients = recipientService.getAllRecipients();
+        return allRecipients.stream()
+                .map((element) -> modelMapper.map(element, AllRecipientsDto.class))
+                .toList();
     }
 
 }
