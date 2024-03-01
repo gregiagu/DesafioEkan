@@ -13,7 +13,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
 public class RecipientDto implements Serializable {
 
     private Long id;

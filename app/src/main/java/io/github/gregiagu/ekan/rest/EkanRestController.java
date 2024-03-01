@@ -3,15 +3,16 @@ package io.github.gregiagu.ekan.rest;
 import io.github.gregiagu.ekan.dto.AllRecipientsDto;
 import io.github.gregiagu.ekan.dto.RecipientDto;
 import io.github.gregiagu.ekan.entities.Recipient;
+import io.github.gregiagu.ekan.exceptions.RecipientNotFoundException;
+import io.github.gregiagu.ekan.faults.RecipientNotFoundFault;
 import io.github.gregiagu.ekan.service.RecipientService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,9 +22,8 @@ import java.util.List;
 public class EkanRestController {
 
     private final Logger logger;
-    private ModelMapper modelMapper;
-
-    private RecipientService recipientService;
+    private final ModelMapper modelMapper;
+    private final RecipientService recipientService;
 
     @Autowired
     public EkanRestController(
@@ -43,24 +43,45 @@ public class EkanRestController {
                 ;
     }
 
+    @GetMapping("/exception")
+    public String getException() throws Exception {
+        throw new Exception("Generic exception");
+    }
+
     @GetMapping("/recipient/{id}")
-    public RecipientDto getRecipient(@PathVariable long id) {
+    public ResponseEntity<RecipientDto> getRecipient(@PathVariable long id) {
 
         logger.atDebug()
                 .log("Get Recipient Id: " + id);
         Recipient referenceById = recipientService.getReferenceById(id);
 
-        return modelMapper.map(referenceById, RecipientDto.class);
+        return new ResponseEntity<>(
+                modelMapper.map(referenceById, RecipientDto.class),
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/recipient/all")
-    public List<AllRecipientsDto> getAllRecipients() {
+    public ResponseEntity<List<AllRecipientsDto>> getAllRecipients() {
         logger.atDebug()
                 .log("Getting All Recipients");
         List<Recipient> allRecipients = recipientService.getAllRecipients();
-        return allRecipients.stream()
-                .map((element) -> modelMapper.map(element, AllRecipientsDto.class))
-                .toList();
+        return new ResponseEntity<>(
+                allRecipients.stream()
+                        .map((element) -> modelMapper.map(element, AllRecipientsDto.class))
+                        .toList(),
+                HttpStatus.OK
+        );
     }
 
+    @ExceptionHandler
+    public ResponseEntity<RecipientNotFoundFault> handleException(RecipientNotFoundException exception) {
+        logger.atError().log("Recipient Not Found!");
+        RecipientNotFoundFault fault = RecipientNotFoundFault.builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .message(exception.getMessage())
+                .timestamp(System.currentTimeMillis())
+                .build();
+        return new ResponseEntity<>(fault, HttpStatus.NOT_FOUND);
+    }
 }

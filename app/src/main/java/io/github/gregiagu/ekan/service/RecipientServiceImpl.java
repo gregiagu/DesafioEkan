@@ -2,6 +2,7 @@ package io.github.gregiagu.ekan.service;
 
 import io.github.gregiagu.ekan.dto.AllRecipientsDto;
 import io.github.gregiagu.ekan.entities.Recipient;
+import io.github.gregiagu.ekan.exceptions.RecipientNotFoundException;
 import io.github.gregiagu.ekan.repositories.RecipientRepo;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class RecipientServiceImpl implements RecipientService{
        return recipientRepo
                 .findById(id)
                 .orElseThrow(
-                        () -> new RuntimeException("Not found")
+                        () -> new RecipientNotFoundException("Not found!")
                 );
 
     }

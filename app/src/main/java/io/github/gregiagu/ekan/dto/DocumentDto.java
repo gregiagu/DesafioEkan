@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
 public class DocumentDto implements Serializable {
 
     private Long id;

@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
 public class AllRecipientsDto implements Serializable {
 
     private Long id;
