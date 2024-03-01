@@ -1,7 +1,7 @@
 package io.github.gregiagu.ekan.rest;
 
-import io.github.gregiagu.ekan.dto.AllRecipientsDto;
-import io.github.gregiagu.ekan.dto.RecipientDto;
+import io.github.gregiagu.ekan.dto.recipient.GetAllRecipientsDto;
+import io.github.gregiagu.ekan.dto.recipient.ResponseRecipientDto;
 import io.github.gregiagu.ekan.exceptions.RecipientNotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -67,10 +66,10 @@ public class EkanRestControllerIntegrationTest {
                 .getResponse()
                 .getContentAsString();
 
-        Object map = modelMapper.map(rawJson, RecipientDto.class);
+        Object map = modelMapper.map(rawJson, ResponseRecipientDto.class);
         assertThat(map)
                 .isNotNull()
-                .isInstanceOf(RecipientDto.class);
+                .isInstanceOf(ResponseRecipientDto.class);
     }
 
     @Test
@@ -88,10 +87,10 @@ public class EkanRestControllerIntegrationTest {
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
                 ;
 
-        Object map = modelMapper.map(rawJson, AllRecipientsDto.class);
+        Object map = modelMapper.map(rawJson, GetAllRecipientsDto.class);
         assertThat(map)
                 .isNotNull()
-                .isInstanceOf(AllRecipientsDto.class);
+                .isInstanceOf(GetAllRecipientsDto.class);
     }
 
     @Test

@@ -1,9 +1,11 @@
 package io.github.gregiagu.ekan.service;
 
-import io.github.gregiagu.ekan.dto.AllRecipientsDto;
+import io.github.gregiagu.ekan.dto.recipient.CreatingRecipientRequestDto;
 import io.github.gregiagu.ekan.entities.Recipient;
 import io.github.gregiagu.ekan.exceptions.RecipientNotFoundException;
 import io.github.gregiagu.ekan.repositories.RecipientRepo;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +14,15 @@ import java.util.List;
 public class RecipientServiceImpl implements RecipientService{
 
     private final RecipientRepo recipientRepo;
+    private final ModelMapper modelMapper;
 
-
-    public RecipientServiceImpl(RecipientRepo recipientRepo) {
+    @Autowired
+    public RecipientServiceImpl(
+            ModelMapper modelMapper,
+            RecipientRepo recipientRepo
+    ) {
         super();
+        this.modelMapper = modelMapper;
         this.recipientRepo = recipientRepo;
     }
 
@@ -34,5 +41,11 @@ public class RecipientServiceImpl implements RecipientService{
         return recipientRepo
                 .findAll()
                 ;
+    }
+
+    @Override
+    public Recipient create(CreatingRecipientRequestDto recipient) {
+        Recipient entity = modelMapper.map(recipient, Recipient.class);
+        return recipientRepo.save(entity);
     }
 }

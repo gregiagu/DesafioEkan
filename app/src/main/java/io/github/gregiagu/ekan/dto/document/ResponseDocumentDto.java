@@ -1,7 +1,6 @@
-package io.github.gregiagu.ekan.dto;
+package io.github.gregiagu.ekan.dto.document;
 
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -11,7 +10,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DocumentDto implements Serializable {
+public class ResponseDocumentDto implements Serializable {
 
     private Long id;
     private String documentType;

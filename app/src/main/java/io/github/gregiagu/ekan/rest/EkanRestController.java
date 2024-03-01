@@ -1,10 +1,9 @@
 package io.github.gregiagu.ekan.rest;
 
-import io.github.gregiagu.ekan.dto.AllRecipientsDto;
-import io.github.gregiagu.ekan.dto.RecipientDto;
+import io.github.gregiagu.ekan.dto.recipient.GetAllRecipientsDto;
+import io.github.gregiagu.ekan.dto.recipient.CreatingRecipientRequestDto;
+import io.github.gregiagu.ekan.dto.recipient.ResponseRecipientDto;
 import io.github.gregiagu.ekan.entities.Recipient;
-import io.github.gregiagu.ekan.exceptions.RecipientNotFoundException;
-import io.github.gregiagu.ekan.faults.RecipientNotFoundFault;
 import io.github.gregiagu.ekan.service.RecipientService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,27 +48,37 @@ public class EkanRestController {
     }
 
     @GetMapping("/recipient/{id}")
-    public ResponseEntity<RecipientDto> getRecipient(@PathVariable long id) {
+    public ResponseEntity<ResponseRecipientDto> getRecipient(@PathVariable long id) {
 
         logger.atDebug()
                 .log("Get Recipient Id: " + id);
         Recipient referenceById = recipientService.getReferenceById(id);
 
         return new ResponseEntity<>(
-                modelMapper.map(referenceById, RecipientDto.class),
+                modelMapper.map(referenceById, ResponseRecipientDto.class),
                 HttpStatus.OK
         );
     }
 
     @GetMapping("/recipient/all")
-    public ResponseEntity<List<AllRecipientsDto>> getAllRecipients() {
+    public ResponseEntity<List<GetAllRecipientsDto>> getAllRecipients() {
         logger.atDebug()
                 .log("Getting All Recipients");
         List<Recipient> allRecipients = recipientService.getAllRecipients();
         return new ResponseEntity<>(
                 allRecipients.stream()
-                        .map((element) -> modelMapper.map(element, AllRecipientsDto.class))
+                        .map((element) -> modelMapper.map(element, GetAllRecipientsDto.class))
                         .toList(),
+                HttpStatus.OK
+        );
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Recipient> createRecipient(
+            @RequestBody final CreatingRecipientRequestDto recipient
+    ){
+        return new ResponseEntity<>(
+                recipientService.create(recipient),
                 HttpStatus.OK
         );
     }
