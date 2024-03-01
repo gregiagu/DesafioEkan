@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -75,7 +76,7 @@ public class EkanRestController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<RecipientNotFoundFault> handleException(RecipientNotFoundException exception) {
+    public ResponseEntity<RecipientNotFoundFault> RecipientNotFoundException(RecipientNotFoundException exception) {
         logger.atError().log("Recipient Not Found!");
         RecipientNotFoundFault fault = RecipientNotFoundFault.builder()
                 .status(HttpStatus.NOT_FOUND.value())
@@ -83,5 +84,16 @@ public class EkanRestController {
                 .timestamp(System.currentTimeMillis())
                 .build();
         return new ResponseEntity<>(fault, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<RecipientNotFoundFault> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception) {
+        logger.atError().log("Bad Request!");
+        RecipientNotFoundFault fault = RecipientNotFoundFault.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(exception.getMessage())
+                .timestamp(System.currentTimeMillis())
+                .build();
+        return new ResponseEntity<>(fault, HttpStatus.BAD_REQUEST);
     }
 }
