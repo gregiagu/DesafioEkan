@@ -74,26 +74,4 @@ public class EkanRestController {
                 HttpStatus.OK
         );
     }
-
-    @ExceptionHandler
-    public ResponseEntity<RecipientNotFoundFault> RecipientNotFoundException(RecipientNotFoundException exception) {
-        logger.atError().log("Recipient Not Found!");
-        RecipientNotFoundFault fault = RecipientNotFoundFault.builder()
-                .status(HttpStatus.NOT_FOUND.value())
-                .message(exception.getMessage())
-                .timestamp(System.currentTimeMillis())
-                .build();
-        return new ResponseEntity<>(fault, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<RecipientNotFoundFault> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception) {
-        logger.atError().log("Bad Request!");
-        RecipientNotFoundFault fault = RecipientNotFoundFault.builder()
-                .status(HttpStatus.BAD_REQUEST.value())
-                .message(exception.getMessage())
-                .timestamp(System.currentTimeMillis())
-                .build();
-        return new ResponseEntity<>(fault, HttpStatus.BAD_REQUEST);
-    }
 }
