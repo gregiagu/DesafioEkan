@@ -53,7 +53,7 @@ public class EkanRestController {
         return modelMapper.map(referenceById, RecipientDto.class);
     }
 
-    @GetMapping("/all-recipients")
+    @GetMapping("/recipient/all")
     public List<AllRecipientsDto> getAllRecipients() {
         logger.atDebug()
                 .log("Getting All Recipients");

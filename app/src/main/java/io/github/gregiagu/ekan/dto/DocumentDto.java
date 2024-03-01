@@ -1,46 +1,31 @@
 package io.github.gregiagu.ekan.dto;
 
+import lombok.*;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Component
-public class DocumentDto {
+public class DocumentDto implements Serializable {
 
     private String documentType;
     private String description;
     private LocalDate registerDate;
     private LocalDate lastUpdate;
 
-    public String getDocumentType() {
-        return documentType;
-    }
-
-    public void setDocumentType(String documentType) {
-        this.documentType = documentType;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDate getRegisterDate() {
-        return registerDate;
-    }
-
-    public void setRegisterDate(LocalDate registerDate) {
-        this.registerDate = registerDate;
-    }
-
-    public LocalDate getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public void setLastUpdate(LocalDate lastUpdate) {
-        this.lastUpdate = lastUpdate;
+    @Override
+    public String toString() {
+        return "DocumentDto{" +
+                "documentType='" + documentType + '\'' +
+                ", description='" + description + '\'' +
+                ", registerDate=" + registerDate +
+                ", lastUpdate=" + lastUpdate +
+                '}';
     }
 }
