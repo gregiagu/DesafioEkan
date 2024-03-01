@@ -30,7 +30,11 @@ public class Recipient implements Serializable {
     private LocalDate lastUpdate;
 
     @Builder.Default
-    @OneToMany(mappedBy = "recipient", cascade = CascadeType.REMOVE)
+    @OneToMany(
+            mappedBy = "recipient",
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST},
+            orphanRemoval = true
+    )
     private List<Document> documentList = new ArrayList<>();
 
     public void addDocument(Document doc) {

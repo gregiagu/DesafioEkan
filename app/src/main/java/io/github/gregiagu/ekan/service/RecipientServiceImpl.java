@@ -1,6 +1,8 @@
 package io.github.gregiagu.ekan.service;
 
+import io.github.gregiagu.ekan.dto.document.ResponseDocumentDto;
 import io.github.gregiagu.ekan.dto.recipient.CreatingRecipientRequestDto;
+import io.github.gregiagu.ekan.dto.recipient.GetAllRecipientsDto;
 import io.github.gregiagu.ekan.dto.recipient.ResponseRecipientDto;
 import io.github.gregiagu.ekan.entities.Document;
 import io.github.gregiagu.ekan.entities.Recipient;
@@ -31,26 +33,40 @@ public class RecipientServiceImpl implements RecipientService{
     }
 
     @Override
-    public Recipient getReferenceById(long id) {
-       return recipientRepo
+    public ResponseRecipientDto getReferenceById(long id) {
+        Recipient resp = recipientRepo
                 .findById(id)
                 .orElseThrow(
                         () -> new RecipientNotFoundException("Not found!")
                 );
-
+        ResponseRecipientDto targetRecipient = modelMapper.map(resp, ResponseRecipientDto.class);
+        List<ResponseDocumentDto> list = resp.getDocumentList().stream()
+                .map(doc -> modelMapper.map(doc, ResponseDocumentDto.class))
+                .toList();
+        targetRecipient.setDocumentList(list);
+        return targetRecipient;
     }
 
     @Override
-    public List<Recipient> getAllRecipients() {
-        return recipientRepo
-                .findAll()
-                ;
+    public List<GetAllRecipientsDto> getAllRecipients() {
+        List<Recipient> allRecipients = recipientRepo
+                .findAll();
+        return allRecipients.stream()
+                .map((element) -> modelMapper.map(element, GetAllRecipientsDto.class))
+                .toList();
     }
 
     @Override
-    public Recipient create(CreatingRecipientRequestDto recipient) {
-        Recipient entity = modelMapper.map(recipient, Recipient.class);
-        return recipientRepo.save(entity);
+    public ResponseRecipientDto create(CreatingRecipientRequestDto targetRecipient) {
+        Recipient entity = modelMapper.map(targetRecipient, Recipient.class);
+        entity.getDocumentList().forEach(
+                document -> document.setRecipient(entity)
+        );
+
+        return modelMapper.map(
+                recipientRepo.save(entity),
+                ResponseRecipientDto.class
+        );
     }
 
     @Override

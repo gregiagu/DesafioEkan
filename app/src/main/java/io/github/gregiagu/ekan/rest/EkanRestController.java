@@ -21,15 +21,12 @@ import java.util.List;
 public class EkanRestController {
 
     private final Logger logger;
-    private final ModelMapper modelMapper;
     private final RecipientService recipientService;
 
     @Autowired
     public EkanRestController(
-            ModelMapper modelMapper,
             RecipientService recipientService
     ) {
-        this.modelMapper = modelMapper;
         this.recipientService = recipientService;
         this.logger = LoggerFactory.getLogger(getClass());
     }
@@ -52,10 +49,9 @@ public class EkanRestController {
 
         logger.atDebug()
                 .log("Get Recipient Id: " + id);
-        Recipient referenceById = recipientService.getReferenceById(id);
 
         return new ResponseEntity<>(
-                modelMapper.map(referenceById, ResponseRecipientDto.class),
+                recipientService.getReferenceById(id),
                 HttpStatus.OK
         );
     }
@@ -64,17 +60,14 @@ public class EkanRestController {
     public ResponseEntity<List<GetAllRecipientsDto>> getAllRecipients() {
         logger.atDebug()
                 .log("Getting All Recipients");
-        List<Recipient> allRecipients = recipientService.getAllRecipients();
         return new ResponseEntity<>(
-                allRecipients.stream()
-                        .map((element) -> modelMapper.map(element, GetAllRecipientsDto.class))
-                        .toList(),
+                recipientService.getAllRecipients(),
                 HttpStatus.OK
         );
     }
 
     @PostMapping("/recipient")
-    public ResponseEntity<Recipient> createRecipient(
+    public ResponseEntity<ResponseRecipientDto> createRecipient(
             @RequestBody final CreatingRecipientRequestDto recipient
     ){
         logger.atDebug()
@@ -103,9 +96,7 @@ public class EkanRestController {
 
         logger.atDebug()
                 .log("Delete Recipient Id: " + id);
-
         recipientService.deleteRecipient(id);
-
         return new ResponseEntity<>(
                 "Deleted Successfully",
                 HttpStatus.OK

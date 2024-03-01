@@ -1,6 +1,7 @@
 package io.github.gregiagu.ekan.service;
 
 import io.github.gregiagu.ekan.dto.recipient.CreatingRecipientRequestDto;
+import io.github.gregiagu.ekan.dto.recipient.GetAllRecipientsDto;
 import io.github.gregiagu.ekan.dto.recipient.ResponseRecipientDto;
 import io.github.gregiagu.ekan.entities.Recipient;
 
@@ -8,11 +9,11 @@ import java.util.List;
 
 public interface RecipientService {
 
-    Recipient getReferenceById(long id);
+    ResponseRecipientDto getReferenceById(long id);
 
-    List<Recipient> getAllRecipients();
+    List<GetAllRecipientsDto> getAllRecipients();
 
-    Recipient create(CreatingRecipientRequestDto recipient);
+    ResponseRecipientDto create(CreatingRecipientRequestDto recipient);
 
     ResponseRecipientDto updateRecipient(long id, CreatingRecipientRequestDto targetRecipient);
 
