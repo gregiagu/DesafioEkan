@@ -77,6 +77,8 @@ public class EkanRestController {
     public ResponseEntity<Recipient> createRecipient(
             @RequestBody final CreatingRecipientRequestDto recipient
     ){
+        logger.atDebug()
+                .log("Creating a new Recipient");
         return new ResponseEntity<>(
                 recipientService.create(recipient),
                 HttpStatus.OK
@@ -88,8 +90,24 @@ public class EkanRestController {
             @PathVariable("id") long id,
             @RequestBody CreatingRecipientRequestDto targetRecipient
     ) {
+        logger.atDebug()
+                .log("Update Recipient Id: " + id);
         return new ResponseEntity<>(
                 recipientService.updateRecipient(id, targetRecipient),
+                HttpStatus.OK
+        );
+    }
+
+    @DeleteMapping("/recipient/{id}")
+    public ResponseEntity<String> deleteRecipient(@PathVariable long id) {
+
+        logger.atDebug()
+                .log("Delete Recipient Id: " + id);
+
+        recipientService.deleteRecipient(id);
+
+        return new ResponseEntity<>(
+                "Deleted Successfully",
                 HttpStatus.OK
         );
     }

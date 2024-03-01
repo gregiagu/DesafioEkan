@@ -15,4 +15,6 @@ public interface RecipientService {
     Recipient create(CreatingRecipientRequestDto recipient);
 
     ResponseRecipientDto updateRecipient(long id, CreatingRecipientRequestDto targetRecipient);
+
+    void deleteRecipient(long id);
 }

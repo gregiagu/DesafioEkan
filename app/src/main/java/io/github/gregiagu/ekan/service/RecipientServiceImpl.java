@@ -70,4 +70,9 @@ public class RecipientServiceImpl implements RecipientService{
                 ResponseRecipientDto.class
         );
     }
+
+    @Override
+    public void deleteRecipient(long id) {
+        recipientRepo.deleteById(id);
+    }
 }
