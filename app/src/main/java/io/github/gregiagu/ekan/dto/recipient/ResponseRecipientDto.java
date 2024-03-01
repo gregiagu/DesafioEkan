@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,5 +21,10 @@ public class ResponseRecipientDto implements Serializable {
     private LocalDate birthdate;
     private LocalDate registerDate;
     private LocalDate lastUpdate;
-    private List<ResponseDocumentDto> documentList;
+    @Builder.Default
+    private List<ResponseDocumentDto> documentList = new ArrayList<>();
+
+    public void addDocument(ResponseDocumentDto doc) {
+        this.documentList.add(doc);
+    }
 }

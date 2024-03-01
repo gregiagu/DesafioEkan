@@ -4,6 +4,7 @@ import io.github.gregiagu.ekan.dto.document.CreatingDocumentDto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -17,5 +18,6 @@ public class CreatingRecipientRequestDto {
     private LocalDate birthdate;
     private LocalDate registerDate;
     private LocalDate lastUpdate;
-    private List<CreatingDocumentDto> documentList;
+    @Builder.Default
+    private List<CreatingDocumentDto> documentList = new ArrayList<>();
 }

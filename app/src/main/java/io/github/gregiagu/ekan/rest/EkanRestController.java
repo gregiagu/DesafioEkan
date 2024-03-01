@@ -73,12 +73,23 @@ public class EkanRestController {
         );
     }
 
-    @PostMapping("/create")
+    @PostMapping("/recipient")
     public ResponseEntity<Recipient> createRecipient(
             @RequestBody final CreatingRecipientRequestDto recipient
     ){
         return new ResponseEntity<>(
                 recipientService.create(recipient),
+                HttpStatus.OK
+        );
+    }
+
+    @PutMapping("/recipient/{id}")
+    public ResponseEntity<ResponseRecipientDto> updateRecipient(
+            @PathVariable("id") long id,
+            @RequestBody CreatingRecipientRequestDto targetRecipient
+    ) {
+        return new ResponseEntity<>(
+                recipientService.updateRecipient(id, targetRecipient),
                 HttpStatus.OK
         );
     }

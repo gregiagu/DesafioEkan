@@ -29,8 +29,9 @@ public class Recipient implements Serializable {
     private LocalDate registerDate;
     private LocalDate lastUpdate;
 
+    @Builder.Default
     @OneToMany(mappedBy = "recipient")
-    private List<Document> documentList ;
+    private List<Document> documentList = new ArrayList<>();
 
     public void addDocument(Document doc) {
         documentList.add(doc);
