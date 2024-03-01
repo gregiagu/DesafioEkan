@@ -39,11 +39,6 @@ public class EkanRestController {
                 ;
     }
 
-    @GetMapping("/exception")
-    public String getException() throws Exception {
-        throw new Exception("Generic exception");
-    }
-
     @GetMapping("/recipient/{id}")
     public ResponseEntity<ResponseRecipientDto> getRecipient(@PathVariable long id) {
 
