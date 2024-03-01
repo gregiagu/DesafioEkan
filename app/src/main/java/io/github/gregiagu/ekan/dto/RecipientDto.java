@@ -16,21 +16,11 @@ import java.util.List;
 @Component
 public class RecipientDto implements Serializable {
 
+    private Long id;
     private String fullName;
     private String telephoneNumber;
     private LocalDate birthdate;
     private LocalDate registerDate;
     private LocalDate lastUpdate;
-    private List<DocumentDto> documentList = new ArrayList<>();
-
-    @Override
-    public String toString() {
-        return "RecipientDto{" +
-                "fullName='" + fullName + '\'' +
-                ", telephoneNumber='" + telephoneNumber + '\'' +
-                ", birthdate=" + birthdate +
-                ", registerDate=" + registerDate +
-                ", lastUpdate=" + lastUpdate +
-                '}';
-    }
+    private List<DocumentDto> documentList;
 }

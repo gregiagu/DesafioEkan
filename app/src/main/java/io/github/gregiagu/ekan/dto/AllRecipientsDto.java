@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @Component
 public class AllRecipientsDto implements Serializable {
 
+    private Long id;
     private String fullName;
     private String telephoneNumber;
     private LocalDate birthdate;

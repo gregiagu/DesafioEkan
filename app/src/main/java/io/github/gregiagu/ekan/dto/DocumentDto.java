@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @Component
 public class DocumentDto implements Serializable {
 
+    private Long id;
     private String documentType;
     private String description;
     private LocalDate registerDate;
